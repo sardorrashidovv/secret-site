@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СЕКРЕТНОЕ ДОСЬЕ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- МУЗЫКА КНОПКА -->
+    <div class="music-toggle">
+        <button id="musicBtn" class="music-btn">🎵 Включить музыку</button>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="music/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ЭКРАН 1: ГЛАВНАЯ -->
+    <section class="screen screen-1 active">
+        <div class="screen-content">
+            <div class="warning-container">
+                <div class="warning-icon">🚨</div>
+                <h1 class="warning-title">ВНИМАНИЕ</h1>
+                <p class="warning-subtitle">Обнаружен подозрительно классный человек.</p>
+                <p class="warning-description">Для получения дополнительной информации необходимо открыть секретное дело.</p>
+                <button class="btn btn-primary" onclick="nextScreen()">ОТКРЫТЬ ДОСЬЕ</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 2: ДОСЬЕ -->
+    <section class="screen screen-2">
+        <div class="screen-content">
+            <div class="file-card">
+                <div class="file-header">
+                    <span class="file-stamp">СЕКРЕТНО</span>
+                    <span class="file-number">#001</span>
+                </div>
+                
+                <div class="file-body">
+                    <div class="stat-item">
+                        <span class="stat-label">Имя:</span>
+                        <span class="stat-value" id="displayName">-</span>
+                    </div>
+
+                    <div class="stat-item with-bar">
+                        <span class="stat-label">Уровень вайба:</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <span class="stat-value">1000%</span>
+                    </div>
+
+                    <div class="stat-item with-bar">
+                        <span class="stat-label">Уровень вредности:</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 87%"></div>
+                        </div>
+                        <span class="stat-value">87%</span>
+                    </div>
+
+                    <div class="stat-item">
+                        <span class="stat-label">Способность смешить:</span>
+                        <span class="stat-value critical">КРИТИЧЕСКАЯ</span>
+                    </div>
+
+                    <div class="stat-item with-bar">
+                        <span class="stat-label">Вероятность украсть мою еду:</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 99.9%"></div>
+                        </div>
+                        <span class="stat-value">99.9%</span>
+                    </div>
+
+                    <div class="stat-item with-bar">
+                        <span class="stat-label">Способность говорить "я на 5 минут" и исчезать на несколько часов:</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 98%"></div>
+                        </div>
+                        <span class="stat-value">98%</span>
+                    </div>
+
+                    <div class="stat-item">
+                        <span class="stat-label">Уровень важности:</span>
+                        <span class="stat-value critical">НЕОПРЕДЕЛИМЫЙ</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="nextScreen()">ПРОДОЛЖИТЬ →</button>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 3: ТЕСТ -->
+    <section class="screen screen-3">
+        <div class="screen-content">
+            <div class="test-container">
+                <h2 class="test-title">ВАЖНЫЙ ТЕСТ</h2>
+                <p class="test-question">Насколько ты считаешь себя хорошей подругой?</p>
+                
+                <div class="test-buttons">
+                    <button class="btn btn-test" onclick="handleTestAnswer('answer1')">100%</button>
+                    <button class="btn btn-test" onclick="handleTestAnswer('answer2')">200%</button>
+                    <button class="btn btn-test" onclick="handleTestAnswer('answer3')">500%</button>
+                    <button class="btn btn-test" onclick="handleTestAnswer('answer4')">Я ЛУЧШАЯ</button>
+                </div>
+
+                <div class="test-response" id="testResponse" style="display: none;">
+                    <p id="testResponseText"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 4: ВИКТОРИНА -->
+    <section class="screen screen-4">
+        <div class="screen-content">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2 class="quiz-title">НАСКОЛЬКО ХОРОШО ТЫ МЕНЯ ЗНАЕШЬ?</h2>
+                    <div class="quiz-progress">
+                        <span id="currentQuestion">1</span> / <span id="totalQuestions">5</span>
+                    </div>
+                </div>
+
+                <div class="quiz-body">
+                    <p class="quiz-question" id="quizQuestion"></p>
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+
+                <div class="quiz-controls">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()" style="display: none;">← НАЗАД</button>
+                    <button class="btn btn-secondary" id="nextBtn" onclick="nextQuestion()" style="display: none;">ДАЛЕЕ →</button>
+                    <button class="btn btn-primary" id="submitBtn" onclick="submitQuiz()" style="display: none;">ПОЛУЧИТЬ РЕЗУЛЬТАТ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 5: ГЕНЕРАТОР -->
+    <section class="screen screen-5">
+        <div class="screen-content">
+            <div class="generator-container">
+                <h2 class="generator-title">ОЦЕНКА ЛИЧНОСТИ</h2>
+                <p class="generator-subtitle">Нажми кнопку, чтобы открыть мою оценку</p>
+                
+                <button class="btn btn-primary" onclick="generateCharacteristic()">ОЦЕНИТЬ МЕНЯ</button>
+
+                <div class="characteristic-display" id="characteristicDisplay" style="display: none;">
+                    <p id="characteristicText"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 6: АРХИВ -->
+    <section class="screen screen-6">
+        <div class="screen-content">
+            <div class="archive-container">
+                <h2 class="archive-title">АРХИВ ДОКАЗАТЕЛЬСТВ</h2>
+                <p class="archive-subtitle">Фотографии из жизни</p>
+
+                <div class="gallery">
+                    <!-- Замени путь на свои фотографии! Смотри комментарии ниже -->
+                    <!-- ИНСТРУКЦИЯ: Положи свои фотографии в папку /images и замени src на имена файлов -->
+                    <!-- Форматы: .jpg, .png, .webp -->
+                    <!-- Рекомендуемый размер: 400x400px или квадратные изображения -->
+                    
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/400x400?text=Доказательство+№01" alt="Доказательство №01">
+                        <div class="gallery-caption">Доказательство №01</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/400x400?text=Доказательство+№02" alt="Доказательство №02">
+                        <div class="gallery-caption">Доказательство №02</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/400x400?text=Доказательство+№03" alt="Доказательство №03">
+                        <div class="gallery-caption">Доказательство №03</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/400x400?text=Доказательство+№04" alt="Доказательство №04">
+                        <div class="gallery-caption">Доказательство №04</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/400x400?text=Доказательство+№05" alt="Доказательство №05">
+                        <div class="gallery-caption">Доказательство №05</div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/400x400?text=Доказательство+№06" alt="Доказательство №06">
+                        <div class="gallery-caption">Доказательство №06</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 7: СЕКРЕТНАЯ КОМНАТА -->
+    <section class="screen screen-7">
+        <div class="screen-content">
+            <div class="secret-container">
+                <h2 class="secret-title">ТЫ НАШЛА СЕКРЕТНЫЙ УРОВЕНЬ</h2>
+                <p class="secret-subtitle">Ладно, теперь серьёзно.</p>
+                <p class="secret-message">Хорошо, что ты есть ❤️</p>
+                <button class="btn btn-primary" onclick="goToScreen(1)">Вернуться в начало</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- КОНФЕТТИ КОНТЕЙНЕР -->
+    <div id="confetti-container"></div>
+
+    <!-- СЕКРЕТНАЯ КНОПКА (для открытия секретной комнаты) -->
+    <div class="secret-click-zone" id="secretClickZone">
+        <span class="secret-text">✨</span>
+    </div>
+
+    <!-- НАВИГАЦИЯ -->
+    <div class="navigation">
+        <button class="nav-btn" onclick="goToScreen(1)">1</button>
+        <button class="nav-btn" onclick="goToScreen(2)">2</button>
+        <button class="nav-btn" onclick="goToScreen(3)">3</button>
+        <button class="nav-btn" onclick="goToScreen(4)">4</button>
+        <button class="nav-btn" onclick="goToScreen(5)">5</button>
+        <button class="nav-btn" onclick="goToScreen(6)">6</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
